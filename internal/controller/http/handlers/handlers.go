@@ -7,6 +7,13 @@ import (
 
 func SignUp(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Register...", r.Method)
+	if r.Method == http.MethodPost {
+		w.WriteHeader(http.StatusAccepted)
+		w.Write([]byte("Register..."))
+
+	} else {
+		w.WriteHeader(http.StatusBadGateway)
+	}
 }
 
 func SignIn(w http.ResponseWriter, r *http.Request) {
@@ -40,4 +47,3 @@ func ShowMonth(w http.ResponseWriter, r *http.Request) {
 func DeleteAccount(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Delete account...")
 }
-
