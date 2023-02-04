@@ -11,7 +11,9 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/ilyakaznacheev/cleanenv v1.4.2 // indirect
 	github.com/joho/godotenv v1.5.0 // indirect
+	github.com/lib/pq v1.10.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
+	github.com/mattes/migrate v3.0.1+incompatible // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/spf13/afero v1.9.3 // indirect
