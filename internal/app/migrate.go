@@ -2,23 +2,20 @@ package app
 
 import (
 	"database/sql"
-	"fmt"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
-	"inex/main/configs"
+	"inex/main/config"
 	"log"
 )
 
 func init() {
-	fmt.Println("run migrate")
-
-	pg, err := configs.NewPG()
+	cfg, err := config.NewConfig()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	db, err := sql.Open("postgres", pg.URL)
+	db, err := sql.Open("postgres", cfg.PG.URL)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,12 +26,12 @@ func init() {
 	}
 
 	m, err := migrate.NewWithDatabaseInstance(
-		pg.Migrations, "postgres", driver)
+		cfg.PG.Migrations, "postgres", driver)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = m.Up()
+	err = m.Down()
 	if err != nil {
 		log.Println("migrate:", err)
 	}
