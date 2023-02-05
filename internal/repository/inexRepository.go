@@ -6,7 +6,8 @@ import (
 )
 
 type (
-	InexRepository struct{}
+	InexRepository struct {
+	}
 )
 
 func (r InexRepository) CreateUser(ctx context.Context, user domain.User) {

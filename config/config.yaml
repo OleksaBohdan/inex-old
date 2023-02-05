@@ -1,0 +1,20 @@
+app:
+  name: 'inex'
+  version: '1.0.0'
+
+http:
+  port: '8080'
+
+logger:
+  log_level: 'debug'
+
+postgres:
+  url: "postgres://postgres:inex1234@localhost:5432/postgres?sslmode=disable"
+  migrations: "file://../database/migrations"
+  pool_max: 2
+
+
+
+
+
+
