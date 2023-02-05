@@ -7,6 +7,7 @@ require (
 	github.com/Masterminds/squirrel v1.5.2 // indirect
 	github.com/evrone/go-clean-template v1.4.2 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
+	github.com/gofrs/uuid v4.4.0+incompatible // indirect
 	github.com/golang-migrate/migrate/v4 v4.15.2 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect

@@ -51,7 +51,7 @@ func New(url string, opts ...Option) (*Postgres, error) {
 			break
 		}
 
-		log.Printf("Postgres is trying to connect, attempts left: %d", pg.connAttempts)
+		log.Printf("postgres is trying to connect, attempts left: %d", pg.connAttempts)
 
 		time.Sleep(pg.connTimeout)
 
