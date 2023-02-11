@@ -1,0 +1,1 @@
+DELETE FROM income_items WHERE id=$1;
