@@ -7,7 +7,18 @@ import (
 
 type (
 	Config struct {
-		PG `yaml:"postgres"`
+		App `yaml:"app"`
+		Log `yaml:"logger"`
+		PG  `yaml:"postgres"`
+	}
+
+	App struct {
+		Name    string `env-required:"true" yaml:"name"    env:"APP_NAME"`
+		Version string `env-required:"true" yaml:"version" env:"APP_VERSION"`
+	}
+
+	Log struct {
+		Level string `env-required:"true" yaml:"log_level"   env:"LOG_LEVEL"`
 	}
 
 	PG struct {

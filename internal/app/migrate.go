@@ -31,7 +31,7 @@ func init() {
 		log.Fatal(err)
 	}
 
-	err = m.Down()
+	err = m.Up()
 	if err != nil {
 		log.Println("migrate:", err)
 	}

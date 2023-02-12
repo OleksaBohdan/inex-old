@@ -1,0 +1,1 @@
+SELECT * FROM income_items WHERE user_id=$1;
