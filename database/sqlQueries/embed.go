@@ -15,6 +15,9 @@ var (
 	//go:embed deleteUser.sql
 	DeleteUser string
 
+	//go:embed readUsers.sql
+	ReadUsers string
+
 	//go:embed createNote.sql
 	CreateNote string
 
@@ -30,12 +33,24 @@ var (
 	//go:embed createIncomeItem.sql
 	CreateIncomeItem string
 
-	//go:embed readIncomeItem.sql
-	ReadIncomeItem string
+	//go:embed readIncomeItems.sql
+	ReadIncomeItems string
 
 	//go:embed updateIncomeItem.sql
 	UpdateIncomeItem string
 
 	//go:embed deleteIncomeItem.sql
 	DeleteIncomeItem string
+
+	//go:embed createCostItem.sql
+	CreateCostItem string
+
+	//go:embed readCostItems.sql
+	ReadCostItems string
+
+	//go:embed updateCostItem.sql
+	UpdateCostItem string
+
+	//go:embed deleteCostItem.sql
+	DeleteCostItem string
 )

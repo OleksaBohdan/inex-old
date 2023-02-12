@@ -5,4 +5,5 @@ FOREIGN KEY (user_id) REFERENCES users(id),
 income_id uuid not null,
 FOREIGN KEY (income_id) REFERENCES income_items(id),
 value float8 not null default(0),
-rang int not null default(0));
+rang int not null default(0),
+created_at timestamp default now());
