@@ -9,5 +9,6 @@ type (
 		ID     uuid.UUID
 		UserId uuid.UUID
 		Name   string
+		Rang   int
 	}
 )

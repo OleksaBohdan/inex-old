@@ -53,4 +53,7 @@ var (
 
 	//go:embed deleteCostItem.sql
 	DeleteCostItem string
+
+	//go:embed createIncome.sql
+	CreateIncome string
 )
