@@ -1,0 +1,1 @@
+INSERT INTO costs (user_id, cost_id, value) VALUES ($1, $2, $3) RETURNING id;

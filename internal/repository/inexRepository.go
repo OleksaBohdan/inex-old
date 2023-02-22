@@ -84,6 +84,32 @@ func (r InexRepo) DeleteUser(ctx context.Context, user domain.User) error {
 	return nil
 }
 
+func (r InexRepo) ReadAllUsers(ctx context.Context) ([]domain.User, error) {
+	rows, err := r.Pool.Query(ctx, sqlQueries.ReadUsers)
+	if err != nil {
+		return nil, fmt.Errorf("InexRepo - ReadAllUsers - r.Pool.Query: %w", err)
+	}
+	defer rows.Close()
+
+	var users []domain.User
+
+	for rows.Next() {
+		if rows.Err() != nil {
+			return nil, rows.Err()
+		}
+
+		var user domain.User
+		err = rows.Scan(&user.ID)
+		if err != nil {
+			return nil, err
+		}
+
+		users = append(users, user)
+	}
+
+	return users, nil
+}
+
 func (r InexRepo) CreateNote(ctx context.Context, note domain.Note, user domain.User) error {
 	rows, err := r.Pool.Query(ctx, sqlQueries.CreateNote, user.ID, note.Text)
 	if err != nil {
@@ -307,28 +333,125 @@ func (r InexRepo) CreateIncome(ctx context.Context, income domain.Income, income
 	return nil
 }
 
-func (r InexRepo) ReadAllUsers(ctx context.Context) ([]domain.User, error) {
-	rows, err := r.Pool.Query(ctx, sqlQueries.ReadUsers)
+func (r InexRepo) ReadIncomes(ctx context.Context, user domain.User) ([]domain.Income, error) {
+	rows, err := r.Pool.Query(ctx, sqlQueries.ReadIncomes, user.ID)
 	if err != nil {
-		return nil, fmt.Errorf("InexRepo - ReadAllUsers - r.Pool.Query: %w", err)
+		return nil, fmt.Errorf("InexRepo - ReadIncomes - r.Pool.Query: %w", err)
 	}
 	defer rows.Close()
 
-	var users []domain.User
+	var incomes []domain.Income
 
 	for rows.Next() {
 		if rows.Err() != nil {
 			return nil, rows.Err()
 		}
-
-		var user domain.User
-		err = rows.Scan(&user.ID)
+		var income domain.Income
+		err = rows.Scan(&income.ID, &income.IncomeId, &income.UserId, &income.Value, &income.CreatedAt)
 		if err != nil {
 			return nil, err
 		}
-
-		users = append(users, user)
+		incomes = append(incomes, income)
 	}
 
-	return users, nil
+	return incomes, nil
+}
+
+func (r InexRepo) UpdateIncome(ctx context.Context, income domain.Income) error {
+	rows, err := r.Pool.Query(ctx, sqlQueries.UpdateIncome, income.ID)
+	if err != nil {
+		return fmt.Errorf("InexRepo - UpdateIncome - r.Pool.Query: %w", err)
+	}
+	defer rows.Close()
+
+	rows.Next()
+	if rows.Err() != nil {
+		return rows.Err()
+	}
+
+	return nil
+}
+
+func (r InexRepo) DeleteIncome(ctx context.Context, income domain.Income) error {
+	rows, err := r.Pool.Query(ctx, sqlQueries.DeleteIncome, income.ID)
+	if err != nil {
+		return fmt.Errorf("InexRepo - DeleteIncome - r.Pool.Query: %w", err)
+	}
+	defer rows.Close()
+
+	rows.Next()
+	if rows.Err() != nil {
+		return rows.Err()
+	}
+
+	return nil
+}
+
+func (r InexRepo) CreateCost(ctx context.Context, cost domain.Cost, costItem domain.CostItem, user domain.User) error {
+	rows, err := r.Pool.Query(ctx, sqlQueries.CreateCost, user.ID, costItem.ID, cost.Value)
+	if err != nil {
+		return fmt.Errorf("InexRepo - CreateCost - r.Pool.Query: %w", err)
+	}
+	defer rows.Close()
+
+	rows.Next()
+	if rows.Err() != nil {
+		return rows.Err()
+	}
+
+	return nil
+}
+
+func (r InexRepo) ReadCosts(ctx context.Context, user domain.User) ([]domain.Income, error) {
+	rows, err := r.Pool.Query(ctx, sqlQueries.ReadCosts, user.ID)
+	if err != nil {
+		return nil, fmt.Errorf("InexRepo - ReadCosts - r.Pool.Query: %w", err)
+	}
+	defer rows.Close()
+
+	var costs []domain.Income
+
+	for rows.Next() {
+		if rows.Err() != nil {
+			return nil, rows.Err()
+		}
+		var cost domain.Income
+		err = rows.Scan(&cost.ID, &cost.IncomeId, &cost.UserId, &cost.Value, &cost.CreatedAt)
+		if err != nil {
+			return nil, err
+		}
+		costs = append(costs, cost)
+	}
+
+	return costs, nil
+}
+
+func (r InexRepo) UpdateCost(ctx context.Context, cost domain.Income) error {
+	rows, err := r.Pool.Query(ctx, sqlQueries.UpdateCost, cost.ID)
+	if err != nil {
+		return fmt.Errorf("InexRepo - UpdateCost - r.Pool.Query: %w", err)
+	}
+	defer rows.Close()
+
+	rows.Next()
+	if rows.Err() != nil {
+		return rows.Err()
+	}
+
+	return nil
+}
+
+func (r InexRepo) DeleteCost(ctx context.Context, cost domain.Cost) error {
+	rows, err := r.Pool.Query(ctx, sqlQueries.DeleteCost, cost.ID)
+	if err != nil {
+		return fmt.Errorf("InexRepo - DeleteCost - r.Pool.Query: %w", err)
+	}
+	defer rows.Close()
+
+	rows.Next()
+	if rows.Err() != nil {
+		return rows.Err()
+	}
+
+	return nil
 }

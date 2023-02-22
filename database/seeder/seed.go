@@ -37,10 +37,10 @@ func SeedDatabase(cfg *config.Config) {
 	//if err != nil {
 	//	l.Fatal(err)
 	//}
-	//
-	//err = seedIncome(pg)
-	//if err != nil {
-	//	l.Fatal(err)
-	//}
+
+	err = seedIncome(pg)
+	if err != nil {
+		l.Fatal(err)
+	}
 
 }

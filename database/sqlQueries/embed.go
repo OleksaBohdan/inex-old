@@ -56,4 +56,25 @@ var (
 
 	//go:embed createIncome.sql
 	CreateIncome string
+
+	//go:embed readIncomes.sql
+	ReadIncomes string
+
+	//go:embed updateIncome.sql
+	UpdateIncome string
+
+	//go:embed deleteIncome.sql
+	DeleteIncome string
+
+	//go:embed createCost.sql
+	CreateCost string
+
+	//go:embed readCosts.sql
+	ReadCosts string
+
+	//go:embed updateCost.sql
+	UpdateCost string
+
+	//go:embed deleteCost.sql
+	DeleteCost string
 )

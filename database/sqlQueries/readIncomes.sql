@@ -1,0 +1,1 @@
+SELECT * FROM incomes WHERE user_id=$1;

@@ -33,7 +33,7 @@ func seedIncome(pg *postgres.Postgres) error {
 
 			for i := 0; i < numRandom; i++ {
 				var income domain.Income
-				income.Value = fake.Float64(2, 1, 2)
+				income.Value = fake.Float64(2, 1, 200)
 				err = inex.CreateIncome(context.Background(), income, incomeItem, user)
 				if err != nil {
 					return fmt.Errorf("seeder - seedIncome - inex.CreateIncome: %w", err)

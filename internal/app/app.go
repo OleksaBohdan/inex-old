@@ -19,4 +19,5 @@ func Run(cfg *config.Config) {
 	defer pg.Close()
 
 	seeder.SeedDatabase(cfg)
+
 }

@@ -6,7 +6,7 @@ import (
 )
 
 type (
-	Income struct {
+	Cost struct {
 		ID        uuid.UUID
 		UserId    uuid.UUID
 		IncomeId  uuid.UUID
