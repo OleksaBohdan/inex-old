@@ -17,7 +17,7 @@ func seedIncome(pg *postgres.Postgres) error {
 
 	users, err := inex.ReadAllUsers(context.Background())
 	if err != nil {
-		return fmt.Errorf("seeder - seedNotes - inex.ReadUser: %w", err)
+		return fmt.Errorf("seeder - seedIncome - inex.ReadUser: %w", err)
 	}
 
 	for _, user := range users {

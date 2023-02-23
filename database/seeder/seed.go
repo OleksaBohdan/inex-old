@@ -38,9 +38,14 @@ func SeedDatabase(cfg *config.Config) {
 	//	l.Fatal(err)
 	//}
 
-	err = seedIncome(pg)
-	if err != nil {
-		l.Fatal(err)
-	}
+	//err = seedIncome(pg)
+	//if err != nil {
+	//	l.Fatal(err)
+	//}
+
+	//err = seedCost(pg)
+	//if err != nil {
+	//	l.Fatal(err)
+	//}
 
 }
