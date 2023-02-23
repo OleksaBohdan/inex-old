@@ -6,8 +6,8 @@ import (
 
 type (
 	Note struct {
-		ID     uuid.UUID
-		UserId uuid.UUID
-		Text   string
+		ID     uuid.UUID `json:"id"`
+		UserId uuid.UUID `json:"user_id"`
+		Text   string    `json:"text"`
 	}
 )

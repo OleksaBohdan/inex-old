@@ -2,8 +2,10 @@ package app
 
 import (
 	"fmt"
+	"github.com/labstack/echo/v4"
 	"inex/main/config"
 	"inex/main/database/seeder"
+	"inex/main/internal/controller/http/routes"
 	"inex/main/pkg/logger"
 	"inex/main/pkg/postgres"
 )
@@ -20,4 +22,8 @@ func Run(cfg *config.Config) {
 
 	seeder.SeedDatabase(cfg)
 
+	e := echo.New()
+	routes.RegisterRoutes(e, pg)
+
+	e.Logger.Fatal(e.Start(cfg.HTTP.Port))
 }

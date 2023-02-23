@@ -7,9 +7,10 @@ import (
 
 type (
 	Config struct {
-		App `yaml:"app"`
-		Log `yaml:"logger"`
-		PG  `yaml:"postgres"`
+		App  `yaml:"app"`
+		Log  `yaml:"logger"`
+		PG   `yaml:"postgres"`
+		HTTP `yaml:"http"`
 	}
 
 	App struct {
@@ -25,6 +26,10 @@ type (
 		URL        string `env-required:"true" yaml:"url" env:"PG_URL"`
 		Migrations string `env-required:"true" yaml:"migrations" env:"PG_MIGRATIONS"`
 		PoolMax    int    `env-required:"true" yaml:"pool_max" env:"PG_POOL_MAX"`
+	}
+
+	HTTP struct {
+		Port string `env-required:"true" yaml:"port" env:"PORT"`
 	}
 )
 
