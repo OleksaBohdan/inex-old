@@ -1,21 +1,19 @@
 package handlers
 
 import (
-	"context"
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"inex/main/domain"
 	"inex/main/internal/repository"
-	"inex/main/pkg/postgres"
+	"inex/main/internal/usecase"
 	"net/http"
 )
 
 type Handler struct {
-	Pg *postgres.Postgres
+	Repo repository.InexRepo
 }
 
-func NewHandler(pg *postgres.Postgres) *Handler {
-	return &Handler{pg}
+func NewHandler(repo repository.InexRepo) *Handler {
+	return &Handler{repo}
 }
 
 func (h Handler) CreateNote(c echo.Context) error {
@@ -26,13 +24,10 @@ func (h Handler) CreateNote(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid data"})
 	}
 
-	inex := repository.New(h.Pg)
-
-	err = inex.CreateNote(context.Background(), note)
+	err = usecase.CreateNote(note, h.Repo)
 	if err != nil {
-		return fmt.Errorf("seeder - seedNotes - inex.CreateNote: %w", err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Internal server error"})
 	}
 
-	fmt.Println(note)
 	return c.JSON(http.StatusCreated, map[string]string{"message": "Note created successfully"})
 }

@@ -6,6 +6,7 @@ import (
 	"inex/main/config"
 	"inex/main/database/seeder"
 	"inex/main/internal/controller/http/routes"
+	"inex/main/internal/repository"
 	"inex/main/pkg/logger"
 	"inex/main/pkg/postgres"
 )
@@ -22,8 +23,10 @@ func Run(cfg *config.Config) {
 
 	seeder.SeedDatabase(cfg)
 
+	inexRepo := repository.New(pg)
+
 	e := echo.New()
-	routes.RegisterRoutes(e, pg)
+	routes.RegisterRoutes(e, inexRepo)
 
 	e.Logger.Fatal(e.Start(cfg.HTTP.Port))
 }
