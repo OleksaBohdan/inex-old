@@ -24,10 +24,11 @@ func (h Handler) CreateNote(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid data"})
 	}
 
-	err = usecase.CreateNote(note, h.Repo)
+	n, err := usecase.CreateNote(note, h.Repo)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Internal server error"})
 	}
 
-	return c.JSON(http.StatusCreated, map[string]string{"message": "Note created successfully"})
+	//return c.JSON(http.StatusCreated, map[string]string{"message": "Note created successfully"})
+	return c.JSON(http.StatusCreated, n)
 }

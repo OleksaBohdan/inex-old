@@ -110,19 +110,24 @@ func (r InexRepo) ReadAllUsers(ctx context.Context) ([]domain.User, error) {
 	return users, nil
 }
 
-func (r InexRepo) CreateNote(ctx context.Context, note domain.Note) error {
+func (r InexRepo) CreateNote(ctx context.Context, note domain.Note) (*domain.Note, error) {
 	rows, err := r.Pool.Query(ctx, sqlQueries.CreateNote, note.UserId, note.Text)
 	if err != nil {
-		return fmt.Errorf("InexRepo - CreateNote - r.Pool.Query: %w", err)
+		return nil, fmt.Errorf("InexRepo - CreateNote - r.Pool.Query: %w", err)
 	}
 	defer rows.Close()
 
 	rows.Next()
 	if rows.Err() != nil {
-		return rows.Err()
+		return nil, rows.Err()
 	}
 
-	return nil
+	err = rows.Scan(&note.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &note, nil
 }
 
 func (r InexRepo) ReadNote(ctx context.Context, user domain.User) (*domain.Note, error) {
