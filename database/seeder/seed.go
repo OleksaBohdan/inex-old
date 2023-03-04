@@ -18,34 +18,34 @@ func SeedDatabase(cfg *config.Config) {
 	}
 	defer pg.Close()
 
-	//err = seedUsers(pg)
-	//if err != nil {
-	//	l.Fatal(err)
-	//}
-	//
+	err = seedUsers(pg)
+	if err != nil {
+		l.Fatal(err)
+	}
+
 	//err = seedNotes(pg)
 	//if err != nil {
 	//	l.Fatal(err)
 	//}
-	//
-	//err = seedIncomeItems(pg)
-	//if err != nil {
-	//	l.Fatal(err)
-	//}
-	//
-	//err = seedCostItems(pg)
-	//if err != nil {
-	//	l.Fatal(err)
-	//}
 
-	//err = seedIncome(pg)
-	//if err != nil {
-	//	l.Fatal(err)
-	//}
+	err = seedIncomeItems(pg)
+	if err != nil {
+		l.Fatal(err)
+	}
 
-	//err = seedCost(pg)
-	//if err != nil {
-	//	l.Fatal(err)
-	//}
+	err = seedCostItems(pg)
+	if err != nil {
+		l.Fatal(err)
+	}
+
+	err = seedIncome(pg)
+	if err != nil {
+		l.Fatal(err)
+	}
+
+	err = seedCost(pg)
+	if err != nil {
+		l.Fatal(err)
+	}
 
 }

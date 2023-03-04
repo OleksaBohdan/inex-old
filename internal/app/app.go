@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/labstack/echo/v4"
 	"inex/main/config"
-	"inex/main/database/seeder"
 	"inex/main/internal/controller/http/routes"
 	"inex/main/internal/repository"
 	"inex/main/pkg/logger"
@@ -21,7 +20,7 @@ func Run(cfg *config.Config) {
 	}
 	defer pg.Close()
 
-	seeder.SeedDatabase(cfg)
+	//seeder.SeedDatabase(cfg)
 
 	inexRepo := repository.New(pg)
 

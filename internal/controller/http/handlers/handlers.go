@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"inex/main/domain"
 	"inex/main/internal/repository"
@@ -26,9 +27,9 @@ func (h Handler) CreateNote(c echo.Context) error {
 
 	n, err := usecase.CreateNote(note, h.Repo)
 	if err != nil {
+		fmt.Println(err)
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Internal server error"})
 	}
 
-	//return c.JSON(http.StatusCreated, map[string]string{"message": "Note created successfully"})
 	return c.JSON(http.StatusCreated, n)
 }

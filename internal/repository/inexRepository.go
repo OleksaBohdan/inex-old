@@ -151,19 +151,24 @@ func (r InexRepo) ReadNote(ctx context.Context, user domain.User) (*domain.Note,
 	return &note, nil
 }
 
-func (r InexRepo) UpdateNote(ctx context.Context, note domain.Note, user domain.User) error {
+func (r InexRepo) UpdateNote(ctx context.Context, note domain.Note, user domain.User) (*domain.Note, error) {
 	rows, err := r.Pool.Query(ctx, sqlQueries.UpdateNote, note.Text, user.ID)
 	if err != nil {
-		return fmt.Errorf("InexRepo - UpdateNote - r.Pool.Query: %w", err)
+		return nil, fmt.Errorf("InexRepo - UpdateNote - r.Pool.Query: %w", err)
 	}
 	defer rows.Close()
 
 	rows.Next()
 	if rows.Err() != nil {
-		return rows.Err()
+		return nil, rows.Err()
 	}
 
-	return nil
+	err = rows.Scan(&note.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &note, nil
 }
 
 func (r InexRepo) DeleteNote(ctx context.Context, user domain.User) error {
