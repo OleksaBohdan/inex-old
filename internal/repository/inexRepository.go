@@ -186,19 +186,24 @@ func (r InexRepo) DeleteNote(ctx context.Context, user domain.User) error {
 	return nil
 }
 
-func (r InexRepo) CreateIncomeItem(ctx context.Context, item domain.IncomeItem, user domain.User) error {
+func (r InexRepo) CreateIncomeItem(ctx context.Context, item domain.IncomeItem, user domain.User) (*domain.IncomeItem, error) {
 	rows, err := r.Pool.Query(ctx, sqlQueries.CreateIncomeItem, item.Name, user.ID)
 	if err != nil {
-		return fmt.Errorf("InexRepo - CreateIncomeItem - r.Pool.Query: %w", err)
+		return nil, fmt.Errorf("InexRepo - CreateIncomeItem - r.Pool.Query: %w", err)
 	}
 	defer rows.Close()
 
 	rows.Next()
 	if rows.Err() != nil {
-		return rows.Err()
+		return nil, rows.Err()
 	}
 
-	return nil
+	err = rows.Scan(&item.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &item, nil
 }
 
 func (r InexRepo) ReadIncomeItems(ctx context.Context, user domain.User) ([]domain.IncomeItem, error) {
@@ -227,19 +232,24 @@ func (r InexRepo) ReadIncomeItems(ctx context.Context, user domain.User) ([]doma
 	return items, nil
 }
 
-func (r InexRepo) UpdateIncomeItem(ctx context.Context, item domain.IncomeItem) error {
+func (r InexRepo) UpdateIncomeItem(ctx context.Context, item domain.IncomeItem) (*domain.IncomeItem, error) {
 	rows, err := r.Pool.Query(ctx, sqlQueries.UpdateIncomeItem, item.Name, item.ID)
 	if err != nil {
-		return fmt.Errorf("InexRepo - UpdateIncomeItem - r.Pool.Query: %w", err)
+		return nil, fmt.Errorf("InexRepo - UpdateIncomeItem - r.Pool.Query: %w", err)
 	}
 	defer rows.Close()
 
 	rows.Next()
 	if rows.Err() != nil {
-		return rows.Err()
+		return nil, rows.Err()
 	}
 
-	return nil
+	err = rows.Scan(&item.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &item, nil
 }
 
 func (r InexRepo) DeleteIncomeItem(ctx context.Context, item domain.IncomeItem) error {

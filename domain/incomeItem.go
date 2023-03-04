@@ -6,9 +6,9 @@ import (
 
 type (
 	IncomeItem struct {
-		ID     uuid.UUID
-		UserId uuid.UUID
-		Name   string
-		Rang   int
+		ID     uuid.UUID `json:"id"`
+		UserId uuid.UUID `json:"user_id"`
+		Name   string    `json:"name"`
+		Rang   int       `json:"rang"`
 	}
 )

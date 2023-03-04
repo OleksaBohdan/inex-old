@@ -7,12 +7,12 @@ import (
 
 type (
 	User struct {
-		ID           uuid.UUID
-		Name         string
-		Surname      string
-		Email        string
-		PasswordHash string
-		RegisteredAt time.Time
-		LastVisit    time.Time
+		ID           uuid.UUID `json:"id"`
+		Name         string    `json:"name"`
+		Surname      string    `json:"surname"`
+		Email        string    `json:"email"`
+		PasswordHash string    `json:"password_hash"`
+		RegisteredAt time.Time `json:"registered_at"`
+		LastVisit    time.Time `json:"last_visit"`
 	}
 )
