@@ -348,19 +348,24 @@ func (r InexRepo) DeleteCostItem(ctx context.Context, item domain.CostItem) erro
 	return nil
 }
 
-func (r InexRepo) CreateIncome(ctx context.Context, income domain.Income, incomeItem domain.IncomeItem, user domain.User) error {
-	rows, err := r.Pool.Query(ctx, sqlQueries.CreateIncome, user.ID, incomeItem.ID, income.Value)
+func (r InexRepo) CreateIncome(ctx context.Context, income domain.Income) (*domain.Income, error) {
+	rows, err := r.Pool.Query(ctx, sqlQueries.CreateIncome, income.UserId, income.IncomeId, income.Value)
 	if err != nil {
-		return fmt.Errorf("InexRepo - CreateIncome - r.Pool.Query: %w", err)
+		return nil, fmt.Errorf("InexRepo - CreateIncome - r.Pool.Query: %w", err)
 	}
 	defer rows.Close()
 
 	rows.Next()
 	if rows.Err() != nil {
-		return rows.Err()
+		return nil, rows.Err()
 	}
 
-	return nil
+	err = rows.Scan(&income.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &income, nil
 }
 
 func (r InexRepo) ReadIncomes(ctx context.Context, user domain.User) ([]domain.Income, error) {
@@ -387,19 +392,24 @@ func (r InexRepo) ReadIncomes(ctx context.Context, user domain.User) ([]domain.I
 	return incomes, nil
 }
 
-func (r InexRepo) UpdateIncome(ctx context.Context, income domain.Income) error {
+func (r InexRepo) UpdateIncome(ctx context.Context, income domain.Income) (*domain.Income, error) {
 	rows, err := r.Pool.Query(ctx, sqlQueries.UpdateIncome, income.ID)
 	if err != nil {
-		return fmt.Errorf("InexRepo - UpdateIncome - r.Pool.Query: %w", err)
+		return nil, fmt.Errorf("InexRepo - UpdateIncome - r.Pool.Query: %w", err)
 	}
 	defer rows.Close()
 
 	rows.Next()
 	if rows.Err() != nil {
-		return rows.Err()
+		return nil, rows.Err()
 	}
 
-	return nil
+	err = rows.Scan(&income.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &income, nil
 }
 
 func (r InexRepo) DeleteIncome(ctx context.Context, income domain.Income) error {

@@ -36,7 +36,6 @@ func (h Handler) CreateNote(c echo.Context) error {
 
 	n, err := usecase.CreateNote(note, h.Repo)
 	if err != nil {
-		fmt.Println(err)
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
@@ -56,7 +55,6 @@ func (h Handler) CreateIncomeItem(c echo.Context) error {
 
 	item, err := usecase.CreateIncomeItem(incomeItem, h.Repo)
 	if err != nil {
-		fmt.Println(err)
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
@@ -78,7 +76,6 @@ func (h Handler) ReadIncomeItems(c echo.Context) error {
 
 	items, err := usecase.ReadIncomeItems(user, h.Repo)
 	if err != nil {
-		fmt.Println(err)
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
@@ -98,7 +95,6 @@ func (h Handler) UpdateIncomeItem(c echo.Context) error {
 
 	item, err := usecase.UpdateIncomeItem(incomeItem, h.Repo)
 	if err != nil {
-		fmt.Println(err)
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
@@ -120,7 +116,6 @@ func (h Handler) DeleteIncomeItem(c echo.Context) error {
 
 	err = usecase.DeleteIncomeItem(incomeItem, h.Repo)
 	if err != nil {
-		fmt.Println(err)
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
@@ -140,7 +135,6 @@ func (h Handler) CreateCostItem(c echo.Context) error {
 
 	item, err := usecase.CreateCostItem(costItem, h.Repo)
 	if err != nil {
-		fmt.Println(err)
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
@@ -162,7 +156,6 @@ func (h Handler) ReadCostItems(c echo.Context) error {
 
 	items, err := usecase.ReadCostItems(user, h.Repo)
 	if err != nil {
-		fmt.Println(err)
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
@@ -182,7 +175,6 @@ func (h Handler) UpdateCostItem(c echo.Context) error {
 
 	item, err := usecase.UpdateCostItem(costItem, h.Repo)
 	if err != nil {
-		fmt.Println(err)
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
@@ -204,9 +196,28 @@ func (h Handler) DeleteCostItem(c echo.Context) error {
 
 	err = usecase.DeleteCostItem(costItem, h.Repo)
 	if err != nil {
-		fmt.Println(err)
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
 	return c.NoContent(http.StatusNoContent)
+}
+
+func (h Handler) CreateIncome(c echo.Context) error {
+	lock.Lock()
+	defer lock.Unlock()
+
+	var income domain.Income
+
+	err := c.Bind(&income)
+	if err != nil {
+		fmt.Println(err)
+		return c.NoContent(http.StatusBadRequest)
+	}
+
+	i, err := usecase.CreateIncome(income, h.Repo)
+	if err != nil {
+		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	return c.JSON(http.StatusCreated, i)
 }
