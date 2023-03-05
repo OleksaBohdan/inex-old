@@ -20,4 +20,9 @@ func RegisterRoutes(e *echo.Echo, repo *repository.InexRepo) {
 	e.PUT("/api/v1/income-item", handler.UpdateIncomeItem)
 	e.DELETE("/api/v1/income-item/:id", handler.DeleteIncomeItem)
 
+	e.POST("/api/v1/cost-item", handler.CreateCostItem)
+	e.GET("/api/v1/cost-item/:id", handler.ReadCostItems)
+	e.PUT("/api/v1/cost-item", handler.UpdateCostItem)
+	e.DELETE("/api/v1/cost-item/:id", handler.DeleteCostItem)
+
 }

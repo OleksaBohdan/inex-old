@@ -19,15 +19,6 @@ func CreateIncomeItem(item domain.IncomeItem, repo repository.InexRepo) (*domain
 	return newItem, nil
 }
 
-func UpdateIncomeItem(item domain.IncomeItem, repo repository.InexRepo) (*domain.IncomeItem, error) {
-	newItem, err := repo.UpdateIncomeItem(context.Background(), item)
-	if err != nil {
-		return nil, err
-	}
-
-	return newItem, nil
-}
-
 func ReadIncomeItems(user domain.User, repo repository.InexRepo) (*[]domain.IncomeItem, error) {
 	items, err := repo.ReadIncomeItems(context.Background(), user)
 	if err != nil {
@@ -35,6 +26,15 @@ func ReadIncomeItems(user domain.User, repo repository.InexRepo) (*[]domain.Inco
 	}
 
 	return &items, nil
+}
+
+func UpdateIncomeItem(item domain.IncomeItem, repo repository.InexRepo) (*domain.IncomeItem, error) {
+	newItem, err := repo.UpdateIncomeItem(context.Background(), item)
+	if err != nil {
+		return nil, err
+	}
+
+	return newItem, nil
 }
 
 func DeleteIncomeItem(item domain.IncomeItem, repo repository.InexRepo) error {

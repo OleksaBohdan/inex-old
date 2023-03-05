@@ -63,26 +63,6 @@ func (h Handler) CreateIncomeItem(c echo.Context) error {
 	return c.JSON(http.StatusCreated, item)
 }
 
-func (h Handler) UpdateIncomeItem(c echo.Context) error {
-	lock.Lock()
-	defer lock.Unlock()
-
-	var incomeItem domain.IncomeItem
-
-	err := c.Bind(&incomeItem)
-	if err != nil {
-		return c.NoContent(http.StatusBadRequest)
-	}
-
-	item, err := usecase.UpdateIncomeItem(incomeItem, h.Repo)
-	if err != nil {
-		fmt.Println(err)
-		return c.NoContent(http.StatusInternalServerError)
-	}
-
-	return c.JSON(http.StatusOK, item)
-}
-
 func (h Handler) ReadIncomeItems(c echo.Context) error {
 	lock.Lock()
 	defer lock.Unlock()
@@ -105,6 +85,26 @@ func (h Handler) ReadIncomeItems(c echo.Context) error {
 	return c.JSON(http.StatusOK, items)
 }
 
+func (h Handler) UpdateIncomeItem(c echo.Context) error {
+	lock.Lock()
+	defer lock.Unlock()
+
+	var incomeItem domain.IncomeItem
+
+	err := c.Bind(&incomeItem)
+	if err != nil {
+		return c.NoContent(http.StatusBadRequest)
+	}
+
+	item, err := usecase.UpdateIncomeItem(incomeItem, h.Repo)
+	if err != nil {
+		fmt.Println(err)
+		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	return c.JSON(http.StatusOK, item)
+}
+
 func (h Handler) DeleteIncomeItem(c echo.Context) error {
 	lock.Lock()
 	defer lock.Unlock()
@@ -119,6 +119,90 @@ func (h Handler) DeleteIncomeItem(c echo.Context) error {
 	incomeItem.ID = id
 
 	err = usecase.DeleteIncomeItem(incomeItem, h.Repo)
+	if err != nil {
+		fmt.Println(err)
+		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	return c.NoContent(http.StatusNoContent)
+}
+
+func (h Handler) CreateCostItem(c echo.Context) error {
+	lock.Lock()
+	defer lock.Unlock()
+
+	var costItem domain.CostItem
+
+	err := c.Bind(&costItem)
+	if err != nil {
+		return c.NoContent(http.StatusBadRequest)
+	}
+
+	item, err := usecase.CreateCostItem(costItem, h.Repo)
+	if err != nil {
+		fmt.Println(err)
+		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	return c.JSON(http.StatusCreated, item)
+}
+
+func (h Handler) ReadCostItems(c echo.Context) error {
+	lock.Lock()
+	defer lock.Unlock()
+
+	var user domain.User
+
+	id, err := uuid.FromString(c.Param("id"))
+	if err != nil {
+		return c.NoContent(http.StatusBadRequest)
+	}
+
+	user.ID = id
+
+	items, err := usecase.ReadCostItems(user, h.Repo)
+	if err != nil {
+		fmt.Println(err)
+		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	return c.JSON(http.StatusOK, items)
+}
+
+func (h Handler) UpdateCostItem(c echo.Context) error {
+	lock.Lock()
+	defer lock.Unlock()
+
+	var costItem domain.CostItem
+
+	err := c.Bind(&costItem)
+	if err != nil {
+		return c.NoContent(http.StatusBadRequest)
+	}
+
+	item, err := usecase.UpdateCostItem(costItem, h.Repo)
+	if err != nil {
+		fmt.Println(err)
+		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	return c.JSON(http.StatusOK, item)
+}
+
+func (h Handler) DeleteCostItem(c echo.Context) error {
+	lock.Lock()
+	defer lock.Unlock()
+
+	var costItem domain.CostItem
+
+	id, err := uuid.FromString(c.Param("id"))
+	if err != nil {
+		return c.NoContent(http.StatusBadRequest)
+	}
+
+	costItem.ID = id
+
+	err = usecase.DeleteCostItem(costItem, h.Repo)
 	if err != nil {
 		fmt.Println(err)
 		return c.NoContent(http.StatusInternalServerError)
